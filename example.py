@@ -13,8 +13,7 @@ target_address = None
 nearby_devices = bluetooth.discover_devices()
 
 for bdaddr in nearby_devices:
-    print(bdaddr+"\n")
-    print(bluetooth.lookup_name(bdaddr)+"\n")
+    print(bdaddr+" ; " + bluetooth.lookup_name(bdaddr) + "\n")
     if target_name == bluetooth.lookup_name( bdaddr ):
         target_address = bdaddr
         break
