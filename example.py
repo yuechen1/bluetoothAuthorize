@@ -1,3 +1,9 @@
+# CPSC 525
+# Andrew Lata, Yue Chen, Justin Berry, Laverne Woroschuk
+#
+# This is an example python program that demonstrates 
+# address and name lookup for nearby bluetooth devices
+# in Python
 
 import bluetooth
 
