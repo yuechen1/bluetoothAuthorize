@@ -4,6 +4,8 @@
 # This is an example python program that demonstrates 
 # address and name lookup for nearby bluetooth devices
 # in Python
+# NOTE: This code requires that PyBluez be installed on 
+#       the machine that it is run on
 
 import bluetooth
 
