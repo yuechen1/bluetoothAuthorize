@@ -10,17 +10,45 @@
 #!/usr/bin/env python
 
 from tkinter import *
+import tkinter as tk
 import bluetooth
+#import bluetooth.ble
 
 # This function queries the nearby Bluetooth devices
 def bt_query():
-    nearby_devices = bluetooth.discover_devices()
+    nearby_devices = bluetooth.discover_devices(duration=8,lookup_names=True,flush_cache=True,lookup_class=False)
+    for bdAddr,bdName in nearby_devices:
+        try:
+            print(bdAddr + " ; " + bdName + "\n")
+        except UnicodeEncodeError:
+            print(bdAddr + " ; " + bdName.encode('utf-8', 'replace') + "\n")
 
-    for bdaddr in nearby_devices:
-        print(bdaddr + " ; " + bluetooth.lookup_name(bdaddr) + "\n")
-
-    if nearby_devices is None:
+    if len(nearby_devices)==0:
         print("There are no nearby bluetooth devices")
+    else:
+        print("___________________________________")
+
+class MainWindow(tk.Frame):
+    def __init__(self,master):
+        tk.Frame.__init__(self,master,width=500,height=400)
+        self.master.title("Bluetooth Authorization Demo")
+        self.pack_propagate(0)
+        self.pack()
+
+    def setControls(self):
+        self.startButton = tk.Button(self, text='Go', command=bt_query)
+
+    def placeWidgets(self):
+        self.startButton.pack(fill=tk.X, side=tk.BOTTOM)
+        
+
+    def run(self):
+        self.setControls()
+        self.placeWidgets()
+        self.mainloop()
 
 
-bt_query()
+# bt_query()
+app = MainWindow(tk.Tk())
+app.run()
+
