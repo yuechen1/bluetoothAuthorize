@@ -36,7 +36,7 @@ class MainWindow(tk.Frame):
         self.pack()
 
     def setControls(self):
-        self.startButton = tk.Button(self, text='Go', command=bt_query)
+        self.startButton = tk.Button(self, text='Scan', command=bt_query)
 
     def placeWidgets(self):
         self.startButton.pack(fill=tk.X, side=tk.BOTTOM)
