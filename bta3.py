@@ -16,8 +16,8 @@ import bluetooth
 
 # This function queries the nearby Bluetooth devices
 def bt_query():
-    nearby_devices = bluetooth.discover_devices(duration=8,lookup_names=True,flush_cache=True,lookup_class=False)
-    for bdAddr,bdName in nearby_devices:
+    nearby_devices = bluetooth.discover_devices(duration=6,lookup_names=False,flush_cache=True,lookup_class=False)
+    for bdAddr in nearby_devices:
         try:
             print(bdAddr + " ; " + bdName + "\n")
         except UnicodeEncodeError:
@@ -28,8 +28,8 @@ def bt_query():
     else:
         print("___________________________________")
 
-class MainWindow(tk.Frame):
-    def __init__(self,master):
+class MainWindow(tk.Frame): # MainWindow class defines the contents and behaviors of the window
+    def __init__(self,master): # Initialize window with size and title
         tk.Frame.__init__(self,master,width=500,height=400)
         self.master.title("Bluetooth Authorization Demo")
         self.pack_propagate(0)
