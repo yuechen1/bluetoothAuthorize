@@ -83,6 +83,7 @@ class MainWindow(tk.Frame): # MainWindow class defines the contents and behavior
                     i=i+1
             if(nearbyNum == self.authList.size()):
                 self.authLabel['text']="Authorized"
+                break
 #               self.authLabel['color']
             
 
