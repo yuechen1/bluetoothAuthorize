@@ -15,7 +15,7 @@ import bluetooth
 #import bluetooth.ble
 
 # This function queries the nearby Bluetooth devices
-def bt_query():
+def bt_query_device():
     nearby_devices = bluetooth.discover_devices(duration=8,lookup_names=True,flush_cache=True,lookup_class=False)
     for bdAddr,bdName in nearby_devices:
         try:
@@ -28,6 +28,9 @@ def bt_query():
     else:
         print("___________________________________")
 
+#def bt_query_le():
+    
+
 class MainWindow(tk.Frame): # MainWindow class defines the contents and behaviors of the window
     def __init__(self,master): # Initialize window with size and title
         tk.Frame.__init__(self,master,width=500,height=400)
@@ -36,11 +39,26 @@ class MainWindow(tk.Frame): # MainWindow class defines the contents and behavior
         self.pack()
 
     def setControls(self):
-        self.startButton = tk.Button(self, text='Scan', command=bt_query)
+        self.startButton = tk.Button(self, text='Scan', command=bt_query_device)
+        self.authList = tk.Listbox(self, height=5, selectmode=SINGLE)
+        self.addAddress = StringVar(self, value="-- Address --")
+        self.addButton = tk.Button(self, text="Add Address", command=self.addDevice)
+        self.inputAddAuth = tk.Entry(self, justify=CENTER, textvariable=self.addAddress)
+        self.removeButton = tk.Button(self,text="Remove",command=self.removeDevice)
 
     def placeWidgets(self):
         self.startButton.pack(fill=tk.X, side=tk.BOTTOM)
-        
+        self.removeButton.pack(fill=tk.X, side=tk.BOTTOM)
+        self.authList.pack(fill=tk.X, anchor=N, side=tk.BOTTOM)
+        self.addButton.pack(fill=tk.X, side=tk.BOTTOM)
+        self.inputAddAuth.pack(fill=tk.X, side=tk.BOTTOM)
+
+    def addDevice(self):
+        newAddress = self.inputAddAuth.get()
+        self.authList.insert(END,newAddress)
+
+    def removeDevice(self):
+        self.authList.delete(self.authList.curselection())
 
     def run(self):
         self.setControls()
