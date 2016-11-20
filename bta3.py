@@ -30,13 +30,6 @@ def bt_query_device():
 
 #def bt_query_le():
 
-#def authLoop(authList):
-#    authorized = False
-#    while(True):
-#        if (authorized):
-#            app.
-    
-
 class MainWindow(tk.Frame): # MainWindow class defines the contents and behaviors of the window
     def __init__(self,master): # Initialize window with size and title
         tk.Frame.__init__(self,master,width=500,height=400)
@@ -67,6 +60,23 @@ class MainWindow(tk.Frame): # MainWindow class defines the contents and behavior
 
     def removeDevice(self):
         self.authList.delete(self.authList.curselection())
+
+    def authLoop(self):
+        authorized = False
+        nearbyNum = 0
+        while(True):
+            nearbyNum = 0
+            nearby_devices = bluetooth.discover_devices(duration=8,lookup_names=False,flush_cache=True,lookup_class=False)
+            for bdAddr in nearby_devices:
+                i = 0
+                while(i < self.authList.size()):
+                    if (bdAddr==self.authList.get(i)):
+                        nearbyNum=nearbyNum+1
+                    i=i+1
+            if(nearbyNum == self.authList.size()):
+                self.authLabel['text']="Authorized"
+#               self.authLabel['color']
+            
 
     def run(self):
         self.setControls()
