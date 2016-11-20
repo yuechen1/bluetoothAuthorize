@@ -63,6 +63,12 @@ class MainWindow(tk.Frame): # MainWindow class defines the contents and behavior
     def removeDevice(self):
         self.authList.delete(self.authList.curselection())
 
+    def authTest(self):
+        nearbyDevices = bluetooth.discover_devices(duration=4,lookup_names=False,flush_cache=True,lookup_class=False)
+        for bdAddr in nearbyDevices:
+            if (bdAddr=="C4:43:8F:93:A3:0B"):
+                self.authLabel['text']="Authorized"
+
     def authLoop(self):
         authorized = False
         nearbyNum = 0
