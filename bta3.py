@@ -6,6 +6,10 @@
 # This application is a proof of concept for using Blutooth devices as 
 # physical "keys" that can be used in conjunction with other authorization
 # mechanisms for providing secure access
+# 
+# NOTE: The app currently requires that Authorizing devices are discoverable
+#       at the time of authorization, and does not pair with the authorizing
+#       devices.
 ##############
 #!/usr/bin/env python
 
