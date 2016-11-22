@@ -31,10 +31,12 @@ class Rule:
             self.__numkeyusers = num
             for x in args:
                 self.__keyusers.append(x)
+    
     @property
     def checkrulebase(self):
          """return the current rule set"""
          return self.__rulebase
+    
     @property
     def enforcerule(self):
         """see if the current rule is enforced"""
@@ -56,4 +58,7 @@ class Rule:
                         return True
             if tempnum > 0:
                 #rule is broken do something here
+                pass
+    
+    @threading
     

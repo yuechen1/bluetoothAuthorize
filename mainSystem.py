@@ -5,7 +5,7 @@ import server.py
 
 #main class used to start threads and other classes
 #planned classes and their functions
-#       a class to scan for bluetooth devices
+# done  a class to scan for bluetooth devices
 #       a class to send message to other threads
 #       a class that just hold a rule, can take in an array of current users and give a yes or no answer
 #           the class must also be threadable, so it can be run to enforce the rule
