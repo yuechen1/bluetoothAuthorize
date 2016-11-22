@@ -49,7 +49,7 @@ class MainWindow(tk.Frame): # MainWindow class defines the contents and behavior
         self.inputAddAuth = tk.Entry(self, justify=CENTER, textvariable=self.addAddress)
         self.removeButton = tk.Button(self,text="Remove",command=self.removeDevice)
         self.authLabel = tk.Message(self,anchor=CENTER,justify=CENTER,pady=20,text="NOT AUTHORIZED")
-        self.runAuthCycle = tk.Button(self, text="Run Authorization Cycle", command=self.authLoop)
+        self.runAuthCycle = tk.Button(self, text="Run Authorization Check", command=self.authLoop)
 
     def placeWidgets(self):
         self.startButton.pack(fill=tk.X, side=tk.BOTTOM)
