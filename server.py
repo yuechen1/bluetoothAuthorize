@@ -22,7 +22,7 @@ class Userobject:
     #bluetooth id of the user currently just using int but will be changed later
     __name = None
     __position = None
-    _blueid = None
+    __blueid = None
 
     #fill all the needs of the object
     def __init__(self, a, b, c):
