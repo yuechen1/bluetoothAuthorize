@@ -77,13 +77,15 @@ class MainWindow(tk.Frame): # MainWindow class defines the contents and behavior
             nearby_devices = bluetooth.discover_devices(duration=8,lookup_names=False,flush_cache=True,lookup_class=False)
             for bdAddr in nearby_devices:
                 i = 0
-                while(i < self.authList.size()):
+                while(i <= self.authList.size()):
                     if (bdAddr==self.authList.get(i)):
                         nearbyNum=nearbyNum+1
                     i=i+1
             if(nearbyNum == self.authList.size()):
                 self.authLabel['text']="Authorized"
-                break # This break is only for testing purposes. If the loop ever gets here then we have this function working
+#                break # This break is only for testing purposes. If the loop ever gets here then we have this function working
+            else:
+                self.authLabel['text']="NOT AUTHORIZED"
 #               self.authLabel['color']
             
 
