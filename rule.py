@@ -7,7 +7,7 @@ from server.py import Userobject
 #give it an object that it will handle such as a file or process
 #management of the file or process
 #
-class Rule:
+class Rule(threading.Thread):
     """holds a rule and a callable thread that will run the enforcement
     will put -1 in rulebase if creation of rule is invalid"""
     __rulelock = None
@@ -20,7 +20,8 @@ class Rule:
     __currentusers = []
     __keyposition = []
     __numkeyusers = None
-    def __init__(self, num, *args, **kargs):
+
+    def __init__(self, num, group=None, target=None, name=None, verbose=None, *args, **kargs):
         """args is an array of user names and kargs is an array of position"""
         if (args is None and kargs is None) or num < 1:
             print("Invalid rule.")
@@ -38,6 +39,7 @@ class Rule:
             #for x in args:
             #    self.__keyusers.append(x)
         self.__rulelock = threading.RLock()
+        threading.Thread.__init__(self, group=group, target=target, name=name, verbose=verbose)
 
     @property
     def checkrulebase(self):
@@ -86,6 +88,12 @@ class Rule:
     def kill(self):
         """change the run variable to kill the thread"""
         pass
+    @property
+    def startcurrent(self, *args):
+        """for bulk input of current users, only used when starting the thread"""
+        with self.__rulelock:
+            for i in args:
+                self.__currentusers.append(i)
     @threading
     def run(self):
         """the cold that will run in the back ground"""

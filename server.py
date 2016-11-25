@@ -1,7 +1,7 @@
 
 class Server:
     """creats an array of users that can be pulled from"""
-    users = []
+    __users = []
     def __init__(self):
         #userobject name,privage, blueid
         self.users.append(x=Userobject("Person1", "admin", 1))
@@ -10,9 +10,9 @@ class Server:
         self.users.append(x=Userobject("Person4", "user", 4))
     def getinfo(self, b_id):
         """search the bluetooth id of users and return the name and privage level"""
-        for i in self.users:
+        for i in self.__users:
             if i.getblueid == b_id:
-                return {'x':i.getname, 'y':i.getposition}
+                return i
         return
 
 class Userobject:
