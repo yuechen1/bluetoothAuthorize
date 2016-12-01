@@ -22,7 +22,14 @@ class Rule(threading.Thread):
     __numkeyusers = None
 
     def __init__(self, num, group=None, target=None, name=None, verbose=None, *args, **kargs):
-        """args is an array of user names and kargs is an array of position"""
+        """args is an array of user names and kargs is an array of position
+        num = number of people needed
+        group must be None
+        target must be None
+        name must be None
+        verbose must be None
+        *args array of users
+        **kargs arrary of positions"""
         if (args is None and kargs is None) or num < 1:
             print("Invalid rule.")
             self.__rulebase = -1

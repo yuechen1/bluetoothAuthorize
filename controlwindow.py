@@ -1,29 +1,30 @@
 import threading
 import time
-from server import Server
-from server import Userobject
-from rule import Rule
+import server
+import rule
 
 class Controlwindow:
-    """will hold the bluetooth serch class, back ground server and have an array of running rules,
-    will take result from the search check it for changes then pass the change to all rule threads.
-    will only make the search thread itself, all other threads will be made in main and passed to
-    this class to manage."""
-    __backserver = None
-    __bluescan = None
+    """will take changes from search then pass the change to all rule threads.
+    all rule threads will be made in main and passed to this class to manage.
+    This is the only class that make use of the server, it will search the 
+    server for the registered users that shows up in changes then pass them to
+    threads"""
+    backserver = None
     __rules = []
-    __blueusers = []
 
-    def __init__(self, s, b):
-        """get server from main and the bluetooth scanner"""
-        self.__backserver = s
-        self.__bluescan = b
-        #TODO get current users from scanner
+    def __init__(self, s):
+        """get server from main"""
+        self.backserver = s
 
-    def addrule(self, inputrule):
+    def addrule(self, inputrule, *args):
         """add a rule to the list of rules"""
+        temp = []
+        for i in args:
+            checkuser = backserver.getuser(i)
+            if checkuser is not None:
+                temp.append(checkuser)
         self.__rules.append(inputrule)
-        inputrule.addcurrent(self.__blueusers)
+        inputrule.startcurrent(temp)
         inputrule.start()
 
     def delrule(self, inputrule):
@@ -33,10 +34,20 @@ class Controlwindow:
 
     def passadd(self, *args):
         """pass a new bluetooth user to the relivent thread"""
+        temp = []
+        for i in args:
+            checkuser = backserver.getuser(i)
+            if checkuser is not None:
+                temp.append(checkuser)
         for i in self.__rules:
-            i.addcurrent(args)
+            i.addcurrent(temp)
 
     def passdel(self, *args):
         """delete the bluetooth users from current threads"""
+        temp = []
+        for i in args:
+            checkuser = backserver.getuser(i)
+            if checkuser is not None:
+                temp.append(checkuser)
         for i in self.__rules:
             i.removecurrent(args)

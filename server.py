@@ -4,16 +4,24 @@ class Server:
     __users = []
     def __init__(self):
         #userobject name,privage, blueid
-        self.users.append(x=Userobject("Person1", "admin", 1))
-        self.users.append(x=Userobject("Person2", "user", 2))
-        self.users.append(x=Userobject("Person3", "admin", 3))
-        self.users.append(x=Userobject("Person4", "user", 4))
-    def getinfo(self, b_id):
+        self.__users.append(x=Userobject("Person1", "admin", 1))
+        self.__users.append(x=Userobject("Person2", "user", 2))
+        self.__users.append(x=Userobject("Person3", "admin", 3))
+        self.__users.append(x=Userobject("Person4", "user", 4))
+    @property
+    def getuser(self, b_id):
         """search the bluetooth id of users and return the name and privage level"""
         for i in self.__users:
             if i.getblueid == b_id:
                 return i
-        return
+        return None
+    @property
+    def someuser(self):
+        """returns two admin users for testing"""
+        temp = []
+        temp.append(self.__users[0])
+        temp.append(self.__users[2])
+        return temp
 
 class Userobject:
     """used for holding a single user in the database"""
@@ -42,4 +50,4 @@ class Userobject:
     @property
     def getblueid(self):
         """return bluetooth id of user"""
-        return self._blueid
+        return self.__blueid
