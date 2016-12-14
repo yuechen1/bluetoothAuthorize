@@ -1,41 +1,35 @@
 import java.util.Vector;
-import supoort.User;
+import support.User;
+import java.util.Arrays;
 
 class Backserver{
-    
-    private Vector users;
+    Thread t;
+    private Vector<User> users;
 
     public Backserver(){
         String tempstring;
         users = new Vector(4,1);
         for(int i = 0; i < 4; i++){
             tempstring = String.valueOf(i);
-            User tempuser = new User("Name" + tempstring, 1, tempstring, "here");
+            User tempuser = new User("Name" + tempstring, 1, tempstring, "here", "none");
             this.users.addElement(tempuser);
         }
-        return;
     }
-
-
-    public void adduser(User u){
-        this.users.addElement(u);
-        return;
-    }
-
 
     public boolean deleteuser(User n){
-        return this.users.remove(n)
+        return this.users.remove(n);
     }
 
     public User[] getuser(String[] n){
         User[] returnuser;
         User[] notuser = new User[n.length];
-        Int userfound = 0
-        User[] tempusers = this.users.toArray();
+        int userfound = 0;
+        User[] tempusers = new User[users.size()];
+        users.toArray(tempusers);
         for(String nname:n){
-            for(int i = 0;i < tempusers.length(); i++)
+            for(int i = 0;i < tempusers.length; i++)
             {
-                if(n.equals(tempusers[i].blueid()))
+                if(n.equals(tempusers[i].getblueid()))
                 {
                     notuser[userfound] = tempusers[i];
                     userfound++;

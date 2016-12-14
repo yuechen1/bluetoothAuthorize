@@ -3,6 +3,7 @@ import java.util.Vector;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Iterator;
+import support.User;
 /**
  * name
  */
@@ -14,14 +15,20 @@ class Rule implements Runnable{
     private int minnumber;
     private Vector<User> currentuser;
     /*
+    * Rule numbers
     * 1 = only users in access array is allowed, the name is used as the identifier here
     * 2 = only users with this attribute in this array is allowed
     * 3 = only users with above this position is allowed
     * 4 = only users with above first position and have all attribute is allowed
+    * the inputs are
+    * a = rule number
+    * b = min number of people needed
+    * c is array of privileged users
+    * d is current list of users
     */
     public Rule (int a, int b, String[] c, User[] u) {
-        this.currentuser = new Vector(3,1);
-        this.access = Array.asList(c);
+        this.currentuser = new Vector();
+        this.access = Arrays.asList(c);
         this.rulesetnumber = a;
         this.minnumber = b;
         if(b < 1 || a < 1 || a > 4){
@@ -33,7 +40,7 @@ class Rule implements Runnable{
     }
     
     public void start(){
-        t = new Thread(this, "thisThread");
+        t = new Thread(this, "Rule");
         t.start();
     }
 
@@ -42,7 +49,7 @@ class Rule implements Runnable{
             while(checkrule()){
                 System.out.println("this rule is working");
                 //todo turn object on
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             }
             while(!checkrule()){
                 //todo turn object off
@@ -54,11 +61,11 @@ class Rule implements Runnable{
     //Add users to current user
     public synchronized void updateuseradd(User[] u){
         boolean k;
-        if(rulesetnumber = 1)
+        if(rulesetnumber == 1)
         {
             for(User i : u){
                 if(access.contains(i.getname())){
-                    k = currentuser.add(i)
+                    k = currentuser.add(i);
                 }
             }
         }
@@ -68,11 +75,11 @@ class Rule implements Runnable{
     //remove users from current user
     public synchronized void updateuserdel(User[] u){
         boolean k;
-        if(rulesetnumber = 1)
+        if(rulesetnumber == 1)
         {
             for(User i : u){
                 if(access.contains(i.getname())){
-                    k = currentuser.remove(i)
+                    k = currentuser.remove(i);
                 }
             }
         }
@@ -109,7 +116,7 @@ class Rule implements Runnable{
             }
             return false;
         }else if(rulesetnumber == 3){
-            Int p = Integer.parseInt(access.get(0));
+            int p = Integer.parseInt(access.get(0));
             while(temparray.hasNext()){
                 temp = temparray.next();
                 if(p <= temp.getprivilege()){
@@ -121,7 +128,7 @@ class Rule implements Runnable{
             }
             return false;
         }else{
-            Int p = Integer.parseInt(access.get(0));
+            int p = Integer.parseInt(access.get(0));
             while(temparray.hasNext()){
                 temp = temparray.next();
                 if(access.contains(temp.getattribute())){
