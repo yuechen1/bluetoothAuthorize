@@ -10,19 +10,37 @@ import java.util.Arrays;
 import java.util.Vector;
 import java.util.Iterator;
 import java.io.IOException;
+import java.lang.Thread;
 
 
-class BtScanner{
+class BtScanner implements Runnable{
     private Controlwindow cw;
     private String[] currentusers;
     private LocalDevice localdevice;
     private DiscoveryAgent discoveryagent;
     private boolean inquiring; 
+    private Thread t;
 
     public BtScanner(Controlwindow a){
         this.cw = a;
-        localdevice = LocalDevice.getLocalDevice();
-        discoveryagent = localdevice.getDiscoveryAgent();
+        //localdevice = LocalDevice.getLocalDevice();
+        //discoveryagent = localdevice.getDiscoveryAgent();
+    }
+
+    public void start(){
+        this.t = new Thread(this, "btlist");
+        t.start();
+    }
+
+    public void run(){
+        while(true){
+            this.updateusers();
+            Thread.sleep(10000);
+        }
+    }
+
+    public synchronized String[] getcurrent(){
+        return currentusers;
     }
 
     private synchronized String[] getnewusers(){
@@ -31,18 +49,24 @@ class BtScanner{
         }
         RemoteDevice[] temp = bi.getdevices();
         String[] ret = new String[temp.length];
-        for(int i = 0, i < temp.length; i++){
+        for(int i = 0; i < temp.length; i++){
             ret[i] = temp[i].getBluetoothAddress();
         }
         return ret;
     }
 
-    public synchronized void updateusers(){
+    private synchronized String[] testusers(){
+        String[] temp = {"1","4"};
+        return temp;
+    }
+
+    public void updateusers(){
         String[] newuser;
         String[] lastusers;
         String[] tempusers;
 
-        List<String> temp = Arrays.asList(this.getnewusers());
+        //List<String> temp = Arrays.asList(this.getnewusers());
+        List<String> temp = Arrays.asList(this.testusers());
         tempusers = new String[temp.length];
         newuser = new String[temp.length];
         int j = 0;
